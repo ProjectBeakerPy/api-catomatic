@@ -38,6 +38,9 @@ WantedBy=multi-user.target
 
 9. configure crontab -e 
 
+# Testing
+# * * * * * curl -X POST localhost:8000/feed/ruby >> ~/cron.log 2>&1
+
+# every day at 7am and then 7pm
 0 7 * * * curl -X POST localhost:8000/feed/ruby >> ~/cron.log 2>&1
 0 19 * * * curl -X POST localhost:8000/feed/ruby >> ~/cron.log 2>&1
-# * * * * * curl -X POST localhost:8000/feed/ruby >> ~/cron.log 2>&1
