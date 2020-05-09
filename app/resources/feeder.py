@@ -1,5 +1,6 @@
 from flask_restful import Resource, reqparse
 from app.models.feeder import FeederModel
+from app.models.history import HistoryModel
 
 class Feeder(Resource):
   parser = reqparse.RequestParser()
@@ -35,13 +36,22 @@ class Feeder(Resource):
 
     return {'message': 'feeder deleted'}
 
-# class FeederList(Resource):
-#   def get(self):
-#     return {'feeders': list(map(lambda x: x.json(), FeederModel.query.all()))}
+class FeederList(Resource):
+  def get(self):
+    return {'feeders': list(map(lambda x: x.json(), FeederModel.query.all()))}
 
-
-# class Feed(Resource):
-#   def post(self, name, attempts):
-#     if FeederModel.find_by_name(name):
-#       data = Feeder.parser.parse_args()
-#       feeder = FeederModel(name, **data)      
+class Feed(Resource):
+  def post(self, name):
+    feeder = FeederModel.find_by_name(name)
+    if feeder:      
+      feed = feeder.feed(feeder.attempts)
+      if feed: 
+        history = HistoryModel(feeder.feeder_id, feeder.attempts)
+        history.save_to_db()
+        return {"message": "success"}, 200 
+      else: 
+        error_msg = "error during feed"
+        history = HistoryModel(feeder.feeder_id, feeder.attempts, error_msg )
+        history.save_to_db()
+        return {"message": history.json()}, 400
+    return {"message": "There is no feeder with that name."}, 400
