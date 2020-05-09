@@ -5,11 +5,14 @@ from config import Config
 
 from app.resources.feeder import Feeder, FeederList, Feed
 from app.resources.history import History, HistoryList
+from app.resources.healthcheck import HealthCheck
 from app.db import db 
 
 app = Flask(__name__)
 app.config.from_object(Config)
 api = Api(app) 
+
+api.add_resource(HealthCheck, '/healthcheck')
 
 api.add_resource(Feeder, '/feeder/<string:name>')
 api.add_resource(FeederList, '/feeders')
