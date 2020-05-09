@@ -1,4 +1,4 @@
-from app.db import db 
+from app.db import db
 
 class FeederModel(db.Model):
   __tablename__ = 'feeder'
@@ -6,8 +6,8 @@ class FeederModel(db.Model):
   feeder_id = db.Column(db.Integer, primary_key=True)
   name = db.Column(db.String(80))
   attempts = db.Column(db.Integer)
+  is_active = db.Column(db.Boolean, default=True)
 
-    
   def __init__(self, name, attempts):
       self.name = name
       self.attempts = attempts

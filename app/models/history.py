@@ -4,17 +4,21 @@ class HistoryModel(db.Model):
   __tablename__ = 'history'
 
   history_id = db.Column(db.Integer, primary_key=True)
+  attempts = db.Column(db.Integer)
+  error_message = db.Column(db.string(500))
+  created_date = db.Column(DateTime, default=datetime.datetime.utcnow)
 
   feeder_id = db.Column(db.Integer, db.ForeignKey('feeder.feeder_id'))
   feeder = db.relationship('FeederModel')
 
     
-  def __init__(self, name, attempts):
+  def __init__(self, name, attempts, error_message):
       self.name = name
       self.attempts = attempts
+      self.error_message = error_message
 
   def json(self):
-    return { 'name': self.name, 'attempts': self.attempts}
+    return { 'name': self.name, 'attempts': self.attempts, 'error_message': self.error_message}
 
   @classmethod
   def find_by_name(cls, name):

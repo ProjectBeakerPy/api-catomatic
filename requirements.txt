@@ -3,4 +3,4 @@ flask
 flask-wtf
 flask-sqlalchemy
 flask-restful
-flask-jwt
+RPi.GPIO
