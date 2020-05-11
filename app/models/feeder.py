@@ -32,6 +32,8 @@ class FeederModel(db.Model):
 
   @classmethod
   def feed(cls, attempts):
+    # return True 
+    # If you need to run this locally, then comment out the gpio and the rest of this method, it wont work on windows. 
     GPIO.setmode(GPIO.BOARD)
     GPIO.setup(12, GPIO.OUT)
     try: 

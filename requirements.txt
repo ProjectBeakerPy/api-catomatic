@@ -4,4 +4,5 @@ flask-wtf
 flask-sqlalchemy
 flask-restful
 RPi.GPIO
-gunicorn 
+gunicorn
+flask-cors

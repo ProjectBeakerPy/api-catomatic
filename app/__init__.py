@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_restful import Api
 from config import Config
-
+from flask_cors import CORS
 
 from app.resources.feeder import Feeder, FeederList, Feed
 from app.resources.history import History, HistoryList
@@ -10,6 +10,7 @@ from app.db import db
 
 app = Flask(__name__)
 app.config.from_object(Config)
+cors = CORS(app, resources={r"*": {"origins": "*"}})
 api = Api(app) 
 
 api.add_resource(HealthCheck, '/healthcheck')
